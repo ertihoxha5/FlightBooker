@@ -2,31 +2,43 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Signup() {
   const navigate = useNavigate();
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const handleLogin = (e) => {
+  const handleSignup = (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
-    if (!email || !password) {
-      setError("All the fields are required");
+    if (!name || !email || !password || !confirmPassword) {
+      setError("All fields are required");
       return;
     }
 
-    if (email === "superadmin@flightbooker.com" && password === "password123") {
-      localStorage.setItem("loggedIn", true);
-      localStorage.setItem("email", email);
-      setSuccess("Logged in successfully");
-    } else {
-      setError("Email or Password are incorrect");
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
     }
+
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailRegex.test(email)) {
+      setError("Invalid email format");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+
+    navigate("/Login.js");
   };
 
   return (
@@ -51,12 +63,26 @@ function Login() {
           color: "white",
         }}
       >
-        <h2 className="text-center mb-4">LOG IN</h2>
+        <h2 className="text-center mb-4">SIGN UP</h2>
 
         {error && <div className="alert alert-danger">{error}</div>}
         {success && <div className="alert alert-success">{success}</div>}
 
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleSignup}>
+          <div className="mb-3">
+            <label htmlFor="name" className="form-label">
+              Name
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="name"
+              placeholder="Write your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+
           <div className="mb-3">
             <label htmlFor="email" className="form-label">
               Email
@@ -70,7 +96,8 @@ function Login() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="mb-2">
+
+          <div className="mb-3">
             <label htmlFor="password" className="form-label">
               Password
             </label>
@@ -84,36 +111,30 @@ function Login() {
             />
           </div>
 
-          <div className="text-end mb-3">
-            <a
-              href="/Signup.jsx"
-              className="text-light small text-decoration-none"
-            >
-              Forgot password?
-            </a>
+          <div className="mb-3">
+            <label htmlFor="confirmPassword" className="form-label">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              id="confirmPassword"
+              placeholder="Confirm your password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
           </div>
 
           <button
             type="submit"
             className="btn btn-light text-primary w-100 fw-bold"
           >
-            LOG IN
-          </button>
-
-          <button
-            type="button"
-            className="btn btn-outline-light mt-3 w-100 fw-bold text-hover-primary"
-          >
-            LOG IN AS ADMIN
+            SIGN UP
           </button>
 
           <div className="text-center mt-3">
-            <a
-              href="/Signup"
-              className="text-light small text-decoration-none"
-              //{onClick={() => navigate("/Signup")}}
-            >
-              Don't have an account? <strong>Sign Up</strong>
+            <a href="/Login" className="text-light small text-decoration-none">
+              Already have an account? <strong>Log In</strong>
             </a>
           </div>
         </form>
@@ -122,4 +143,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;
