@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 
-function LoginPage() {
+function Login() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -20,11 +20,11 @@ function LoginPage() {
       return;
     }
 
-    if (email === "user@example.com" && password === "password123") {
+    if (email === "superadmin@flightbooker.com" && password === "password123") {
       localStorage.setItem("loggedIn", true);
       localStorage.setItem("email", email);
       setSuccess("Logged in successfully");
-      navigate("/dashboard");
+
     } else {
       setError("Email or Password are incorrect");
     }
@@ -116,4 +116,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default Login;
