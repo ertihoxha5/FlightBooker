@@ -86,7 +86,7 @@ function Login() {
 
           <div className="text-end mb-3">
             <a
-              href="/Signup.jsx"
+              href="/ForgotPass"
               className="text-light small text-decoration-none"
             >
               Forgot password?
