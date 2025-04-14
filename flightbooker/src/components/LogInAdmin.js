@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function LogInAdmin() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [code, setCode]  = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -15,18 +16,19 @@ function Login() {
     setError("");
     setSuccess("");
 
-    if (!email || !password) {
+    if (!email || !password || !code)  {
       setError("All the fields are required");
       return;
     }
 
-    if (email === "superadmin@flightbooker.com" && password === "password123") {
+    if (email === "admin@flightbooker.com" && password === "password123") {
       localStorage.setItem("loggedIn", true);
       localStorage.setItem("email", email);
       setSuccess("Logged in successfully");
     } else {
       setError("Email or Password are incorrect");
     }
+    navigate("/Login.js");
   };
 
   return (
@@ -51,7 +53,7 @@ function Login() {
           color: "white",
         }}
       >
-        <h2 className="text-center mb-4">LOG IN</h2>
+        <h2 className="text-center mb-4">LOG IN AS ADMIN</h2>
 
         {error && <div className="alert alert-danger">{error}</div>}
         {success && <div className="alert alert-success">{success}</div>}
@@ -84,43 +86,35 @@ function Login() {
             />
           </div>
 
-          <div className="text-end mb-3">
-            <a
-              href="/ForgotPass"
-              className="text-light small text-decoration-none"
-            >
-              Forgot password?
-            </a>
+          <div className="mb-2">
+            <label htmlFor="code" className="form-label">
+              Unique Code
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="code"
+              placeholder="Write your code"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+            
+            />
           </div>
 
-          <button
+
+           <button
             type="submit"
             className="btn btn-light text-primary w-100 fw-bold"
           >
-            LOG IN
-          </button>
-           <a href="/LogInAdmin">
-          <button
-            type="button"
-            className="btn btn-outline-light mt-3 w-100 fw-bold text-hover-primary"
-          >
             LOG IN AS ADMIN
           </button>
-          </a>
 
-          <div className="text-center mt-3">
-            <a
-              href="/Signup"
-              className="text-light small text-decoration-none"
-              //{onClick={() => navigate("/Signup")}}
-            >
-              Don't have an account? <strong>Sign Up</strong>
-            </a>
-          </div>
+         
+         
         </form>
       </div>
     </div>
   );
 }
 
-export default Login;
+export default LogInAdmin; 
