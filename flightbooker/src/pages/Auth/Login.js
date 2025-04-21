@@ -24,6 +24,9 @@ function Login() {
       localStorage.setItem("loggedIn", true);
       localStorage.setItem("email", email);
       setSuccess("Logged in successfully");
+
+      // Navigate to dashboard
+      navigate("/ClientDashboard");
     } else {
       setError("Email or Password are incorrect");
     }
@@ -93,29 +96,32 @@ function Login() {
             </a>
           </div>
 
+          {/* SUBMIT BUTTON */}
           <button
             type="submit"
             className="btn btn-light text-primary w-100 fw-bold"
           >
             LOG IN
           </button>
-           <a href="/LogInAdmin">
+
+          {/* LOGIN AS ADMIN */}
           <button
             type="button"
             className="btn btn-outline-light mt-3 w-100 fw-bold text-hover-primary"
+            onClick={() => navigate("/LogInAdmin")}
           >
             LOG IN AS ADMIN
           </button>
-          </a>
 
+          {/* SIGNUP LINK */}
           <div className="text-center mt-3">
-            <a
-              href="/Signup"
+            <span
+              onClick={() => navigate("/Signup")}
               className="text-light small text-decoration-none"
-              //{onClick={() => navigate("/Signup")}}
+              style={{ cursor: "pointer" }}
             >
               Don't have an account? <strong>Sign Up</strong>
-            </a>
+            </span>
           </div>
         </form>
       </div>

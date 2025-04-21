@@ -1,9 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
-import ForgotPass from "./components/ForgotPass";
-import LogInAdmin from "./components/LogInAdmin";
+import Login from "./pages/Auth/Login";
+import Signup from "./pages/Auth/Signup";
+import ForgotPass from "./pages/Auth/ForgotPass";
+import LogInAdmin from "./pages/Auth/LogInAdmin";
+import ClientDashboard from "./pages/Dashboard/Client/ClientDashboard";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
         <Route path="/Signup" element={<Signup />} />
         <Route path="/ForgotPass" element={<ForgotPass />} />
         <Route path="/LogInAdmin" element={<LogInAdmin />} />
+        <Route path="/ClientDashboard" element={<ClientDashboard/>} />
       </Routes>
     </Router>
   );

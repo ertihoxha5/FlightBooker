@@ -87,19 +87,6 @@ function ForgotPass() {
             />
           </div>
 
-          <div className="form-check mb-3">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              id="termsCheck"
-              checked={acceptedTerms}
-              onChange={(e) => setAcceptedTerms(e.target.checked)}
-            />
-            <label className="form-check-label" htmlFor="termsCheck">
-              I accept Terms & Conditions
-            </label>
-          </div>
-
           <button
             type="submit"
             className="btn btn-light text-primary w-100 fw-bold"

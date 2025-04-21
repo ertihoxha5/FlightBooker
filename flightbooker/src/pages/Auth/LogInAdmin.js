@@ -109,6 +109,16 @@ function LogInAdmin() {
             LOG IN AS ADMIN
           </button>
 
+
+          <div className="text-center mt-3">
+            <a
+              href="/Login"
+              className="text-light small text-decoration-none"
+            >
+              Go back to <strong>Login</strong>
+            </a>
+          </div>
+
          
          
         </form>
