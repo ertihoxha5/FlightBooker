@@ -50,6 +50,9 @@ const ClientDashboard = () => {
             <li className="nav-item">
               <NavLink to="/explore" className="nav-link text-white">Settings</NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink to="/explore" className="nav-link text-white">Contact Us</NavLink>
+            </li>
           </ul>
 
          
