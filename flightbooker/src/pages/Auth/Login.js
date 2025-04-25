@@ -17,7 +17,7 @@ function Login() {
       return;
     }
 
-    if (email === "user@gmail.com" && password === "password") {
+    if (email === "user@gmail.com" && password === "password123") {
       localStorage.setItem("userLoggedIn", true);
       navigate("/Client/home");
     } else {
