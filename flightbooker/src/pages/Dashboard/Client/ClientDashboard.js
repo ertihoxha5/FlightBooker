@@ -1,5 +1,6 @@
 import React from 'react';
-import { Routes, Route, NavLink, useNavigate } from 'react-router-dom'; 
+import { Routes, Route, useNavigate } from 'react-router-dom'; 
+import Sidebar from '../../../components/Sidebar';
 
 import Home from './Home';
 import Profile from './Profile';
@@ -11,66 +12,32 @@ import Explore from './Explore';
 
 const ClientDashboard = () => {
   const navigate = useNavigate();
-  
+
   const handleLogout = () => {
-
-    localStorage.removeItem('userToken');  
-
+    localStorage.removeItem('userToken');
     navigate('/login');
   };
 
   return (
-    <div className="container-fluid">
-      <div className="row vh-100">
+    <div id="wrapper">
+      <Sidebar />
 
-        <div className="col-md-3 bg-primary text-white p-4">
-          <h2 className="mb-4">FlightBooker</h2>
-          <ul className="nav flex-column">
-            <li className="nav-item">
-              <NavLink to="/" className="nav-link text-white">Home</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/profile" className="nav-link text-white">Profile</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/wallet" className="nav-link text-white">Wallet</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/banks" className="nav-link text-white">Banks</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/book-flight" className="nav-link text-white">Book Flight</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/my-flights" className="nav-link text-white">My Flights</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/explore" className="nav-link text-white">Explore</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/explore" className="nav-link text-white">Settings</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/explore" className="nav-link text-white">Contact Us</NavLink>
-            </li>
-          </ul>
+      <div id="content-wrapper" className="d-flex flex-column">
+        <div id="content">
+
+          <div className="container-fluid pt-4">
+            <Routes>
+              <Route path="/home" element={<Home />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/wallet" element={<Wallet />} />
+              <Route path="/banks" element={<Banks />} />
+              <Route path="/book-flight" element={<BookFlight />} />
+              <Route path="/my-flights" element={<MyFlights />} />
+              <Route path="/explore" element={<Explore />} />
+            </Routes>
 
          
-          <button onClick={handleLogout} className="btn btn-danger mt-4">
-            Log Out
-          </button>
-        </div>
-
-        <div className="col-md-9 bg-light p-4 overflow-auto">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/wallet" element={<Wallet />} />
-            <Route path="/banks" element={<Banks />} />
-            <Route path="/book-flight" element={<BookFlight />} />
-            <Route path="/my-flights" element={<MyFlights />} />
-            <Route path="/explore" element={<Explore />} />
-          </Routes>
+          </div>
         </div>
       </div>
     </div>

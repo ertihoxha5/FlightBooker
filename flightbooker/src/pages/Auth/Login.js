@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -8,122 +7,105 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
     setError("");
-    setSuccess("");
 
     if (!email || !password) {
-      setError("All the fields are required");
+      setError("Please fill in all fields.");
       return;
     }
 
-    if (email === "superadmin@flightbooker.com" && password === "password123") {
-      localStorage.setItem("loggedIn", true);
-      localStorage.setItem("email", email);
-      setSuccess("Logged in successfully");
-
-      // Navigate to dashboard
-      navigate("/ClientDashboard");
+    if (email === "user@gmail.com" && password === "password") {
+      localStorage.setItem("userLoggedIn", true);
+      navigate("/Client/home");
     } else {
-      setError("Email or Password are incorrect");
+      setError("Invalid email or password.");
     }
   };
 
   return (
-    <div
-      className="bg-primary bg-gradient text-white"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        padding: "0 15px",
-      }}
-    >
-      <div
-        className="shadow-lg p-5 rounded-4"
-        style={{
-          backdropFilter: "blur(10px)",
-          background: "rgba(255, 255, 255, 0.1)",
-          border: "1px solid rgba(255, 255, 255, 0.2)",
-          width: "100%",
-          maxWidth: "400px",
-          color: "white",
-        }}
-      >
-        <h2 className="text-center mb-4">LOG IN</h2>
+    <div className="bg-gradient-primary min-vh-100 d-flex align-items-center justify-content-center">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-lg-6">
+            <div className="card o-hidden border-0 shadow-lg">
+              <div className="card-body p-5">
+                <div className="text-center mb-4">
+                  <h1 className="h4 text-gray-900 fw-bold">Welcome Back!</h1>
+                  <p className="text-muted">Access your FlightBooker dashboard</p>
+                </div>
 
-        {error && <div className="alert alert-danger">{error}</div>}
-        {success && <div className="alert alert-success">{success}</div>}
+                {error && <div className="alert alert-danger">{error}</div>}
 
-        <form onSubmit={handleLogin}>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              placeholder="Write your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+                <form onSubmit={handleLogin}>
+                  <div className="form-group mb-3">
+                    <div className="input-group">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text bg-white border-end-0">
+                          <i className="fas fa-envelope text-primary"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="email"
+                        className="form-control border-start-0"
+                        placeholder="Write your Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group mb-4">
+                    <div className="input-group">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text bg-white border-end-0">
+                          <i className="fas fa-lock text-primary"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="password"
+                        className="form-control border-start-0"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-block mb-3 shadow-sm"
+                  >
+                    <i className="fas fa-sign-in-alt me-2"></i> Log In
+                  </button>
+
+                  <button
+                    type="button"
+                    className="btn btn-outline-primary btn-block mb-3"
+                    onClick={() => navigate("/loginadmin")}
+                  >
+                    <i className="fas fa-user me-2"></i> Log In as Admin
+                  </button>
+
+                  <div className="text-center">
+                    <a className="small text-primary" href="/forgotpass">
+                      Forgot Password?
+                    </a>
+                  </div>
+                  <div className="text-center mt-2">
+                    <span className="small">Don’t have an account? </span>
+                    <a className="small text-primary fw-bold" href="/signup">
+                      Sign Up
+                    </a>
+                  </div>
+                </form>
+
+              </div>
+            </div>
           </div>
-          <div className="mb-2">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              placeholder="Write your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-
-          <div className="text-end mb-3">
-            <a
-              href="/ForgotPass"
-              className="text-light small text-decoration-none"
-            >
-              Forgot password?
-            </a>
-          </div>
-
-          {/* SUBMIT BUTTON */}
-          <button
-            type="submit"
-            className="btn btn-light text-primary w-100 fw-bold"
-          >
-            LOG IN
-          </button>
-
-          {/* LOGIN AS ADMIN */}
-          <button
-            type="button"
-            className="btn btn-outline-light mt-3 w-100 fw-bold text-hover-primary"
-            onClick={() => navigate("/LogInAdmin")}
-          >
-            LOG IN AS ADMIN
-          </button>
-
-          {/* SIGNUP LINK */}
-          <div className="text-center mt-3">
-            <span
-              onClick={() => navigate("/Signup")}
-              className="text-light small text-decoration-none"
-              style={{ cursor: "pointer" }}
-            >
-              Don't have an account? <strong>Sign Up</strong>
-            </span>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   );

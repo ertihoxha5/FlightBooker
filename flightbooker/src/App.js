@@ -5,21 +5,27 @@ import Signup from "./pages/Auth/Signup";
 import ForgotPass from "./pages/Auth/ForgotPass";
 import LogInAdmin from "./pages/Auth/LogInAdmin";
 import ClientDashboard from "./pages/Dashboard/Client/ClientDashboard";
-import "bootstrap/dist/css/bootstrap.min.css";
+import AdminDashboard from "./pages/Dashboard/Admin/AdminDashboard";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/Signup" element={<Signup />} />
-        <Route path="/ForgotPass" element={<ForgotPass />} />
-        <Route path="/LogInAdmin" element={<LogInAdmin />} />
-        <Route path="/ClientDashboard" element={<ClientDashboard />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/forgotpass" element={<ForgotPass />} />
+        <Route path="/loginadmin" element={<LogInAdmin />} />
+
+        {/* CLIENT Dashboard */}
+        <Route path="/Client/*" element={<ClientDashboard />} />
+
+        {/* ADMIN Dashboard */}
+        <Route path="/Admin/*" element={<AdminDashboard />} />
       </Routes>
     </Router>
   );
 }
 
 export default App;
+

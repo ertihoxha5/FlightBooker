@@ -16,93 +16,102 @@ function ForgotPass() {
     setSuccess('');
 
     if (!acceptedTerms) {
-      setError('Ju lutem pranoni Terms dhe Conditions.');
+      setError('Please accept the Terms and Conditions.');
       return;
     }
 
     if (passRi !== konfirmimi) {
-      setError('Passwordi gabim!');
+      setError('Passwords do not match!');
       return;
     }
 
-    setSuccess('Password-i u ndryshua me sukses!');
+    setSuccess('Password changed successfully!');
     setTimeout(() => navigate("/Login"), 1500);
   };
 
   return (
-    <div
-      className="bg-primary bg-gradient text-white"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        padding: "0 15px",
-      }}
-    >
-      <div
-        className="shadow-lg p-5 rounded-4"
-        style={{
-          backdropFilter: "blur(10px)",
-          background: "rgba(255, 255, 255, 0.1)",
-          border: "1px solid rgba(255, 255, 255, 0.2)",
-          width: "100%",
-          maxWidth: "400px",
-          color: "white",
-        }}
-      >
-        <h2 className="text-center mb-4">Change Password</h2>
+    <div className="bg-gradient-primary min-vh-100 d-flex align-items-center justify-content-center">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-xl-6 col-lg-7">
+            <div className="card o-hidden border-0 shadow-lg rounded-4">
+              <div className="card-body p-5">
+                <div className="text-center mb-4">
+                  <h1 className="h3 text-gray-900 fw-bold mb-1">Change Password</h1>
+                  <p className="text-muted mb-4">Enter your new password</p>
+                </div>
 
-        {error && <div className="alert alert-danger">{error}</div>}
-        {success && <div className="alert alert-success">{success}</div>}
+                {error && <div className="alert alert-danger shadow-sm">{error}</div>}
+                {success && <div className="alert alert-success shadow-sm">{success}</div>}
 
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="newPassword" className="form-label">
-              New Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="newPassword"
-              placeholder="Enter new password"
-              value={passRi}
-              onChange={(e) => setPassRi(e.target.value)}
-              required
-            />
+                <form onSubmit={handleSubmit} className="user">
+                  <div className="form-group mb-3">
+                    <div className="input-group">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text bg-white border-end-0">
+                          <i className="fas fa-lock text-primary"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="password"
+                        className="form-control form-control-user border-start-0"
+                        placeholder="Enter New Password"
+                        value={passRi}
+                        onChange={(e) => setPassRi(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group mb-3">
+                    <div className="input-group">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text bg-white border-end-0">
+                          <i className="fas fa-lock text-primary"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="password"
+                        className="form-control form-control-user border-start-0"
+                        placeholder="Confirm New Password"
+                        value={konfirmimi}
+                        onChange={(e) => setKonfirmimi(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-check mb-3">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id="terms"
+                      checked={acceptedTerms}
+                      onChange={() => setAcceptedTerms(!acceptedTerms)}
+                    />
+                    <label className="form-check-label" htmlFor="terms">
+                      I accept the <a href="/terms" className="text-decoration-none text-primary">Terms and Conditions</a>
+                    </label>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-user btn-block shadow"
+                    disabled={!acceptedTerms}
+                  >
+                    Reset Password
+                  </button>
+
+                  <div className="text-center mt-3">
+                    <a className="small text-primary" href="/Login">
+                      Go back to Login
+                    </a>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
-
-          <div className="mb-3">
-            <label htmlFor="confirmPassword" className="form-label">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="confirmPassword"
-              placeholder="Confirm new password"
-              value={konfirmimi}
-              onChange={(e) => setKonfirmimi(e.target.value)}
-              required
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="btn btn-light text-primary w-100 fw-bold"
-          >
-            Reset Password
-          </button>
-
-          <div className="text-center mt-3">
-            <a
-              href="/Login"
-              className="text-light small text-decoration-none"
-            >
-              Go back to <strong>Login</strong>
-            </a>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   );

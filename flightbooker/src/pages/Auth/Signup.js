@@ -38,107 +38,108 @@ function Signup() {
       return;
     }
 
-    // Navigate to the login page
-    navigate("/Login");
+    setSuccess("Account created successfully!");
+    setTimeout(() => navigate("/Login"), 1500); 
   };
 
   return (
-    <div
-      className="bg-primary bg-gradient text-white"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-        padding: "0 15px",
-      }}
-    >
-      <div
-        className="shadow-lg p-5 rounded-4"
-        style={{
-          backdropFilter: "blur(10px)",
-          background: "rgba(255, 255, 255, 0.1)",
-          border: "1px solid rgba(255, 255, 255, 0.2)",
-          width: "100%",
-          maxWidth: "400px",
-          color: "white",
-        }}
-      >
-        <h2 className="text-center mb-4">SIGN UP</h2>
+    <div className="bg-gradient-primary min-vh-100 d-flex align-items-center justify-content-center">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-xl-6 col-lg-7">
+            <div className="card o-hidden border-0 shadow-lg rounded-4">
+              <div className="card-body p-5">
+                <div className="text-center mb-4">
+                  <h1 className="h3 text-gray-900 fw-bold mb-1">Sign Up</h1>
+                  <p className="text-muted mb-4">Create your account</p>
+                </div>
 
-        {error && <div className="alert alert-danger">{error}</div>}
-        {success && <div className="alert alert-success">{success}</div>}
+                {error && <div className="alert alert-danger shadow-sm">{error}</div>}
+                {success && <div className="alert alert-success shadow-sm">{success}</div>}
 
-        <form onSubmit={handleSignup}>
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">
-              Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              placeholder="Write your name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+                <form onSubmit={handleSignup} className="user">
+                  <div className="form-group mb-3">
+                    <div className="input-group">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text bg-white border-end-0">
+                          <i className="fas fa-user text-primary"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="text"
+                        className="form-control form-control-user border-start-0"
+                        placeholder="Enter Name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group mb-3">
+                    <div className="input-group">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text bg-white border-end-0">
+                          <i className="fas fa-envelope text-primary"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="email"
+                        className="form-control form-control-user border-start-0"
+                        placeholder="Enter Email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group mb-3">
+                    <div className="input-group">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text bg-white border-end-0">
+                          <i className="fas fa-lock text-primary"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="password"
+                        className="form-control form-control-user border-start-0"
+                        placeholder="Enter Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="form-group mb-3">
+                    <div className="input-group">
+                      <div className="input-group-prepend">
+                        <span className="input-group-text bg-white border-end-0">
+                          <i className="fas fa-lock text-primary"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="password"
+                        className="form-control form-control-user border-start-0"
+                        placeholder="Confirm Password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <button type="submit" className="btn btn-primary btn-user btn-block shadow">
+                    <i className="fas fa-user-plus me-2"></i> Sign Up
+                  </button>
+
+                  <div className="text-center mt-3">
+                    <a className="small text-primary" href="/Login">
+                      Already have an account? Log In
+                    </a>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
-
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
-              Email
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              placeholder="Write your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              placeholder="Write your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-
-          <div className="mb-3">
-            <label htmlFor="confirmPassword" className="form-label">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              id="confirmPassword"
-              placeholder="Confirm your password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="btn btn-light text-primary w-100 fw-bold"
-          >
-            SIGN UP
-          </button>
-
-          <div className="text-center mt-3">
-            <a href="/Login" className="text-light small text-decoration-none">
-              Already have an account? <strong>Log In</strong>
-            </a>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   );
