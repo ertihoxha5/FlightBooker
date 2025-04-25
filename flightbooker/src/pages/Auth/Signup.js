@@ -38,7 +38,8 @@ function Signup() {
       return;
     }
 
-    navigate("/Login.js");
+    // Navigate to the login page
+    navigate("/Login");
   };
 
   return (
