@@ -136,6 +136,15 @@ const AdminHome = () => {
         </div>
       </div>
 
+      <footer className="text-center mt-5 py-4 border-top text-muted">
+        <p className="mb-0">&copy; {new Date().getFullYear()} FlightBooker. All rights reserved.</p>
+        <small>
+          <a href="/terms" className="text-muted mx-2">Terms of Service</a> |
+          <a href="/privacy" className="text-muted mx-2">Privacy Policy</a> |
+          <a href="/contact" className="text-muted mx-2">Contact Us</a>
+        </small>
+      </footer>
+
 
 
     </div>
