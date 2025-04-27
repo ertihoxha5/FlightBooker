@@ -1,0 +1,43 @@
+# Ignore user-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignore build results
+bin/
+obj/
+out/
+
+# Ignore published files
+*.publish/
+*.deploy/
+
+# Ignore app secrets and sensitive configs
+appsettings.json
+appsettings.Development.json
+
+# Ignore Rider/VSCode/JetBrains-specific files
+.idea/
+.vscode/
+*.code-workspace
+
+# Ignore logs
+*.log
+logs/
+log/
+
+# Ignore temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Ignore database exports if sensitive
+*.bak
+*.mdf
+*.ldf
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
