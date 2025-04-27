@@ -6,6 +6,7 @@ import ForgotPass from "./pages/Auth/ForgotPass";
 import LogInAdmin from "./pages/Auth/LogInAdmin";
 import ClientDashboard from "./pages/Dashboard/Client/ClientDashboard";
 import AdminDashboard from "./pages/Dashboard/Admin/AdminDashboard";
+import SuperadminDashboard from "./pages/Dashboard/Superadmin/SuperadminDashboard";
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
 
         {/* ADMIN Dashboard */}
         <Route path="/Admin/*" element={<AdminDashboard />} />
+
+        {/* SUPERADMIN Dashboard */}
+        <Route path="/Superadmin/*" element={<SuperadminDashboard />} />
+
       </Routes>
     </Router>
   );

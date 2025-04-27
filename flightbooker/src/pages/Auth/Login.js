@@ -23,6 +23,13 @@ function Login() {
     } else {
       setError("Invalid email or password.");
     }
+
+    if (email === "superadmin@flightbooker.com" && password === "password123") {
+      localStorage.setItem("userLoggedIn", true);
+      navigate("/Superadmin/sahome");
+    } else {
+      setError("Invalid email or password.");
+    }
   };
 
   return (
