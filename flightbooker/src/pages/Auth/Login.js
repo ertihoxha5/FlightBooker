@@ -30,6 +30,13 @@ function Login() {
     } else {
       setError("Invalid email or password.");
     }
+
+    if (email === "admin@flightbooker.com" && password === "password123") {
+      localStorage.setItem("userLoggedIn", true);
+      navigate("/Admin/adminhome");
+    } else {
+      setError("Invalid email or password.");
+    }
   };
 
   return (
@@ -88,13 +95,7 @@ function Login() {
                     <i className="fas fa-sign-in-alt me-2"></i> Log In
                   </button>
 
-                  <button
-                    type="button"
-                    className="btn btn-outline-primary btn-block mb-3"
-                    onClick={() => navigate("/loginadmin")}
-                  >
-                    <i className="fas fa-user me-2"></i> Log In as Admin
-                  </button>
+                
 
                   <div className="text-center">
                     <a className="small text-primary" href="/forgotpass">

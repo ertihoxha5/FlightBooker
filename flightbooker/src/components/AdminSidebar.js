@@ -49,12 +49,7 @@ const AdminSidebar = () => {
         </NavLink>
       </li>
 
-      <li className="nav-item">
-        <NavLink to="/users" className="nav-link">
-          <i className="fas fa-fw fa-user"></i>
-          <span>Users</span>
-        </NavLink>
-      </li>
+    
 
       <li className="nav-item">
         <NavLink to="/Admin/banksmanagment" className="nav-link">
@@ -63,12 +58,6 @@ const AdminSidebar = () => {
         </NavLink>
       </li>
 
-      <li className="nav-item">
-        <NavLink to="/payments" className="nav-link">
-          <i className="fas fa-fw fa-money-bill-alt"></i>
-          <span>Payments</span>
-        </NavLink>
-      </li>
 
       <li className="nav-item">
         <NavLink to="/report" className="nav-link">
@@ -77,19 +66,7 @@ const AdminSidebar = () => {
         </NavLink>
       </li>
 
-      <li className="nav-item">
-        <NavLink to="/marketing" className="nav-link">
-          <i className="fas fa-fw fa-cogs"></i>
-          <span>Marketing</span>
-        </NavLink>
-      </li>
-
-      <li className="nav-item">
-        <NavLink to="/feedbacks" className="nav-link">
-          <i className="fas fa-fw fa-comments"></i>
-          <span>Feedbacks</span>
-        </NavLink>
-      </li>
+     
 
       <li className="nav-item">
         <NavLink to="/adminsettings" className="nav-link">

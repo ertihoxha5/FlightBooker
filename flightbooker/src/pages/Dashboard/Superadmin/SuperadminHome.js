@@ -5,10 +5,8 @@ const SuperadminHome = () => {
   return (
     <div className="container-fluid">
 
-      {/* Heading */}
       <h1 className="h3 mb-4 text-gray-800">Welcome, Super Admin</h1>
 
-      {/* Summary Cards */}
       <div className="row">
         <div className="col-xl-3 col-md-6 mb-4">
           <div className="card border-left-primary shadow h-100 py-2">
@@ -67,7 +65,6 @@ const SuperadminHome = () => {
         </div>
       </div>
 
-      {/* Overview Section */}
       <div className="row mt-4">
         <div className="col-lg-8">
           <div className="card shadow mb-4">
@@ -109,7 +106,6 @@ const SuperadminHome = () => {
         </div>
       </div>
 
-      {/* Recent Activities */}
       <div className="row mt-4">
         <div className="col-lg-12">
           <div className="card shadow mb-4">
@@ -129,7 +125,6 @@ const SuperadminHome = () => {
         </div>
       </div>
 
-      {/* System Health */}
       <div className="row mt-4">
         <div className="col-lg-12">
           <div className="card shadow mb-4">

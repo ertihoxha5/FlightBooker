@@ -4,7 +4,6 @@ import Sidebar from '../../../components/Sidebar';
 
 import Home from './Home';
 import Profile from './Profile';
-import Wallet from './Wallet';
 import Banks from './Banks';
 import BookFlight from './BookFlight';
 import MyFlights from './MyFlights';
@@ -29,7 +28,6 @@ const ClientDashboard = () => {
             <Routes>
               <Route path="/home" element={<Home />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/wallet" element={<Wallet />} />
               <Route path="/banks" element={<Banks />} />
               <Route path="/book-flight" element={<BookFlight />} />
               <Route path="/my-flights" element={<MyFlights />} />

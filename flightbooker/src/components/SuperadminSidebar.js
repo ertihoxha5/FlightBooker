@@ -70,12 +70,7 @@ const SuperadminSidebar = () => {
         </NavLink>
       </li>
 
-      <li className="nav-item">
-        <NavLink to="/Superadmin/paymentsoverview" className="nav-link">
-          <i className="fas fa-fw fa-credit-card"></i>
-          <span>Payments Overview</span>
-        </NavLink>
-      </li>
+  
 
       <li className="nav-item">
         <NavLink to="/Superadmin/bookingsoverview" className="nav-link">
@@ -91,47 +86,7 @@ const SuperadminSidebar = () => {
         </NavLink>
       </li>
 
-      <li className="nav-item">
-        <NavLink to="/Superadmin/promotions" className="nav-link">
-          <i className="fas fa-fw fa-bullhorn"></i>
-          <span>Promotions</span>
-        </NavLink>
-      </li>
-
-      <li className="nav-item">
-        <NavLink to="/Superadmin/notificationmanagment" className="nav-link">
-          <i className="fas fa-fw fa-bell"></i>
-          <span>Notification Management</span>
-        </NavLink>
-      </li>
-
-      <li className="nav-item">
-        <NavLink to="/Superadmin/emailtemplates" className="nav-link">
-          <i className="fas fa-fw fa-envelope"></i>
-          <span>Email Templates</span>
-        </NavLink>
-      </li>
-
-      <li className="nav-item">
-        <NavLink to="/Superadmin/cms" className="nav-link">
-          <i className="fas fa-fw fa-file-alt"></i>
-          <span>CMS</span>
-        </NavLink>
-      </li>
-
-      <li className="nav-item">
-        <NavLink to="/Superadmin/auditlogs" className="nav-link">
-          <i className="fas fa-fw fa-history"></i>
-          <span>Audit Logs</span>
-        </NavLink>
-      </li>
-
-      <li className="nav-item">
-        <NavLink to="/Superadmin/systemlogs" className="nav-link">
-          <i className="fas fa-fw fa-server"></i>
-          <span>System Logs</span>
-        </NavLink>
-      </li>
+     
 
       <li className="nav-item">
         <NavLink to="/Superadmin/systemsettings" className="nav-link">

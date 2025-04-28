@@ -34,12 +34,7 @@ const Sidebar = () => {
         </NavLink>
       </li>
 
-      <li className="nav-item">
-        <NavLink to="/Client/wallet" className="nav-link">
-          <i className="fas fa-fw fa-wallet"></i>
-          <span>Wallet</span>
-        </NavLink>
-      </li>
+      
 
       <li className="nav-item">
         <NavLink to="/Client/banks" className="nav-link">
