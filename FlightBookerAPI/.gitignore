@@ -14,7 +14,7 @@ out/
 *.deploy/
 
 # Ignore app secrets and sensitive configs
-appsettings.json
+
 appsettings.Development.json
 
 # Ignore Rider/VSCode/JetBrains-specific files
