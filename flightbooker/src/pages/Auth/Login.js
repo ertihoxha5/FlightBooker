@@ -17,26 +17,25 @@ function Login() {
       return;
     }
 
-    if (email === "user@gmail.com" && password === "password123") {
-      localStorage.setItem("userLoggedIn", true);
-      navigate("/Client/home");
-    } else {
-      setError("Invalid email or password.");
-    }
-
     if (email === "superadmin@flightbooker.com" && password === "password123") {
       localStorage.setItem("userLoggedIn", true);
       navigate("/Superadmin/sahome");
-    } else {
-      setError("Invalid email or password.");
+      return;
     }
 
     if (email === "admin@flightbooker.com" && password === "password123") {
       localStorage.setItem("userLoggedIn", true);
       navigate("/Admin/adminhome");
-    } else {
-      setError("Invalid email or password.");
+      return;
     }
+
+    if (email === "user@gmail.com" && password === "password123") {
+      localStorage.setItem("userLoggedIn", true);
+      navigate("/Client/home");
+      return;
+    }
+
+    setError("Invalid email or password.");
   };
 
   return (
@@ -94,8 +93,6 @@ function Login() {
                   >
                     <i className="fas fa-sign-in-alt me-2"></i> Log In
                   </button>
-
-                
 
                   <div className="text-center">
                     <a className="small text-primary" href="/forgotpass">
