@@ -151,22 +151,7 @@ const ManageAirlines = () => {
                       </div>
                     </div>
 
-                    <div className="ml-3 mt-2">
-                      <h6 className="text-muted">Pilots</h6>
-                      {flight.pilots.map(pilot => (
-                        <div key={pilot.id} className="d-flex justify-content-between">
-                          <button className="btn btn-sm btn-danger" onClick={() => deletePilot(airline.id, flight.id, pilot.id)}>
-                            <FaTrashAlt />
-                          </button>
-                        </div>
-                      ))}
-                      <button
-                        className="btn btn-outline-success btn-sm mt-2"
-                        onClick={() => openModal('addPilot', airline, flight)}
-                      >
-                        <FaPlus className="mr-1" /> Add Pilot
-                      </button>
-                    </div>
+                
                   </div>
                 ))}
                 <button
