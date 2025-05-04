@@ -43,7 +43,7 @@ const AdminSidebar = () => {
       </li>
 
       <li className="nav-item">
-        <NavLink to="/airlines" className="nav-link">
+        <NavLink to="/Admin/airlines" className="nav-link">
           <i className="fas fa-fw fa-building"></i>
           <span>Airlines</span>
         </NavLink>
