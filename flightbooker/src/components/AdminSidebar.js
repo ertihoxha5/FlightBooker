@@ -60,7 +60,7 @@ const AdminSidebar = () => {
 
 
       <li className="nav-item">
-        <NavLink to="/report" className="nav-link">
+        <NavLink to="/Admin/report" className="nav-link">
           <i className="fas fa-fw fa-chart-bar"></i>
           <span>Reports</span>
         </NavLink>
