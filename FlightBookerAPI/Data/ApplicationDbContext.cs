@@ -18,6 +18,14 @@ namespace FlightBookerAPI.Data
             
             // Konfigurime shtesë për modelet mund të shtohen këtu
             SeedData.Seed(modelBuilder);
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username)
+                .IsUnique();
         }
     }
 }
