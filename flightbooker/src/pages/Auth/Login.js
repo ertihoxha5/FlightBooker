@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
   const navigate = useNavigate();
@@ -8,34 +9,53 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
 
     if (!email || !password) {
-      setError("Please fill in all fields.");
+      setError("Ju lutem plotësoni të gjitha fushat.");
       return;
     }
 
-    if (email === "superadmin@flightbooker.com" && password === "password123") {
-      localStorage.setItem("userLoggedIn", true);
-      navigate("/Superadmin/sahome");
-      return;
-    }
+    try {
+      const response = await axios.post(
+        "http://localhost:5215/api/Auth/login",
+        {
+          email,
+          password,
+        }
+      );
 
-    if (email === "admin@flightbooker.com" && password === "password123") {
-      localStorage.setItem("userLoggedIn", true);
-      navigate("/Admin/adminhome");
-      return;
-    }
+      if (response.data.token) {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            username: response.data.username,
+            email: response.data.email,
+            role: response.data.role,
+          })
+        );
 
-    if (email === "user@gmail.com" && password === "password123") {
-      localStorage.setItem("userLoggedIn", true);
-      navigate("/Client/home");
-      return;
+        // Navigate based on role
+        switch (response.data.role) {
+          case "SuperAdmin":
+            navigate("/Superadmin/sahome");
+            break;
+          case "Admin":
+            navigate("/Admin/adminhome");
+            break;
+          case "User":
+            navigate("/Client/home");
+            break;
+          default:
+            navigate("/");
+        }
+      }
+    } catch (error) {
+      setError(error.response?.data?.message || "Email ose password i gabuar.");
     }
-
-    setError("Invalid email or password.");
   };
 
   return (
@@ -46,8 +66,12 @@ function Login() {
             <div className="card o-hidden border-0 shadow-lg">
               <div className="card-body p-5">
                 <div className="text-center mb-4">
-                  <h1 className="h4 text-gray-900 fw-bold">Welcome Back!</h1>
-                  <p className="text-muted">Access your FlightBooker dashboard</p>
+                  <h1 className="h4 text-gray-900 fw-bold">
+                    Mirë se vini përsëri!
+                  </h1>
+                  <p className="text-muted">
+                    Hyni në panelin tuaj të FlightBooker
+                  </p>
                 </div>
 
                 {error && <div className="alert alert-danger">{error}</div>}
@@ -63,7 +87,7 @@ function Login() {
                       <input
                         type="email"
                         className="form-control border-start-0"
-                        placeholder="Write your Email"
+                        placeholder="Shkruani email-in tuaj"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                       />
@@ -80,7 +104,7 @@ function Login() {
                       <input
                         type="password"
                         className="form-control border-start-0"
-                        placeholder="Password"
+                        placeholder="Fjalëkalimi"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                       />
@@ -91,22 +115,21 @@ function Login() {
                     type="submit"
                     className="btn btn-primary btn-block mb-3 shadow-sm"
                   >
-                    <i className="fas fa-sign-in-alt me-2"></i> Log In
+                    <i className="fas fa-sign-in-alt me-2"></i> Hyni
                   </button>
 
                   <div className="text-center">
                     <a className="small text-primary" href="/forgotpass">
-                      Forgot Password?
+                      Keni harruar fjalëkalimin?
                     </a>
                   </div>
                   <div className="text-center mt-2">
-                    <span className="small">Don’t have an account? </span>
+                    <span className="small">Nuk keni llogari? </span>
                     <a className="small text-primary fw-bold" href="/signup">
-                      Sign Up
+                      Regjistrohuni
                     </a>
                   </div>
                 </form>
-
               </div>
             </div>
           </div>
