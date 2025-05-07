@@ -2,8 +2,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
+using FlightBookerAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Shto konfigurimin e Entity Framework Core
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
@@ -30,7 +36,7 @@ builder.Services.AddSwaggerGen(c =>
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "Vendos JWT token-in n� k�t� m�nyr�: Bearer {token}",
+        Description = "Vendos JWT token-in n� k�t� m�nyr�: Bearer {token}",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
@@ -50,6 +56,25 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+// Konfiguro portin
+app.Urls.Add("http://localhost:5215");
+
+// Krijo bazën e të dhënave nëse nuk ekziston
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<ApplicationDbContext>();
+        context.Database.EnsureCreated();
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Gabim gjatë krijimit të bazës së të dhënave.");
+    }
+}
 
 if (app.Environment.IsDevelopment())
 {

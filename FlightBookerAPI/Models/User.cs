@@ -1,13 +1,22 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace FlightBookerAPI.Models
 {
     public class User
     {
+        [Key]
         public int Id { get; set; }
 
-        public string Email { get; set; } = null!;
-        public string Password { get; set; } = null!;
+        [Required]
+        public required string Username { get; set; }
+
+        [Required]
+        public required string Email { get; set; }
+
+        [Required]
+        public required string PasswordHash { get; set; }
+
         public string Role { get; set; } = null!;
 
         public string Emri { get; set; } = null!;

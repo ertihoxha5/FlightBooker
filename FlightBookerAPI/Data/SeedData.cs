@@ -15,8 +15,10 @@ namespace FlightBookerAPI.Data
                     Emri = "Super",
                     Mbiemri = "Admin",
                     Email = "superadmin@flightbooker.com",
-                    Password = BCrypt.Net.BCrypt.HashPassword("password123"),
-                    Role = "SuperAdmin"
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("password123"),
+                    Role = "SuperAdmin",
+                    Username = "superadmin",
+                    CreatedAt = DateTime.UtcNow
                 },
                 new User
                 {
@@ -24,8 +26,10 @@ namespace FlightBookerAPI.Data
                     Emri = "Admin",
                     Mbiemri = "Flight",
                     Email = "admin@flightbooker.com",
-                    Password = BCrypt.Net.BCrypt.HashPassword("password123"),
-                    Role = "Admin"
+                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("password123"),
+                    Role = "Admin",
+                    Username = "admin",
+                    CreatedAt = DateTime.UtcNow
                 }
             );
         }
