@@ -25,44 +25,6 @@ namespace FlightBookerAPI.Controllers
             _context = context;
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDTO loginDto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Username == loginDto.Username);
-
-            if (user == null)
-            {
-                return Unauthorized("Username ose password i gabuar");
-            }
-
-            // Verifiko password-in
-            using var hmac = new HMACSHA512();
-            var computedHash = Convert.ToBase64String(
-                hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password))
-            );
-
-            if (computedHash != user.PasswordHash)
-            {
-                return Unauthorized("Username ose password i gabuar");
-            }
-
-            var token = GenerateJwtToken(user.Username, user.Role);
-
-            return Ok(new
-            {
-                token,
-                username = user.Username,
-                email = user.Email,
-                role = user.Role
-            });
-        }
-
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDTO registerDto)
         {
@@ -72,28 +34,20 @@ namespace FlightBookerAPI.Controllers
             }
 
             // Kontrollo nëse email-i ekziston
-            if (await _context.Users.AnyAsync(u => u.Email == registerDto.Email))
+            if (await _context.Emails.AnyAsync(e => e.EmailAddress == registerDto.Email))
             {
                 return BadRequest("Ky email është i regjistruar tashmë");
             }
 
             // Kontrollo nëse username ekziston
-            if (await _context.Users.AnyAsync(u => u.Username == registerDto.Username))
+            if (await _context.Logins.AnyAsync(l => l.Username == registerDto.Username))
             {
                 return BadRequest("Ky username është i zënë");
             }
 
-            // Krijo hash të password-it
-            using var hmac = new HMACSHA512();
-            var passwordHash = Convert.ToBase64String(
-                hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password))
-            );
-
+            // Krijo përdoruesin
             var user = new User
             {
-                Username = registerDto.Username,
-                Email = registerDto.Email,
-                PasswordHash = passwordHash,
                 Emri = registerDto.Emri,
                 Mbiemri = registerDto.Mbiemri,
                 Rruga = registerDto.Rruga,
@@ -102,14 +56,95 @@ namespace FlightBookerAPI.Controllers
                 Gjinia = registerDto.Gjinia,
                 DataLindjes = registerDto.DataLindjes,
                 Shteti = registerDto.Shteti,
-                Role = "User",
+                Verified = false,
                 CreatedAt = DateTime.UtcNow
             };
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
+            // Krijo email-in
+            var email = new Email
+            {
+                UserID = user.UserID,
+                EmailAddress = registerDto.Email,
+                IsPrimary = true,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _context.Emails.Add(email);
+
+            // Krijo login-in
+            var login = new Login
+            {
+                UserID = user.UserID,
+                Username = registerDto.Username,
+                Password = BCrypt.Net.BCrypt.HashPassword(registerDto.Password),
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _context.Logins.Add(login);
+
+            // Krijo klientin
+            var klienti = new Klienti
+            {
+                UserID = user.UserID
+            };
+
+            _context.Klientet.Add(klienti);
+
+            await _context.SaveChangesAsync();
+
             return Ok(new { message = "Regjistrimi u krye me sukses" });
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDTO loginDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var email = await _context.Emails
+                .Include(e => e.User)
+                .ThenInclude(u => u.Login)
+                .FirstOrDefaultAsync(e => e.EmailAddress == loginDto.Email);
+
+            if (email == null || email.User == null || email.User.Login == null)
+            {
+                return Unauthorized("Email ose password i gabuar");
+            }
+
+            var login = email.User.Login;
+
+            if (!BCrypt.Net.BCrypt.Verify(loginDto.Password, login.Password))
+            {
+                return Unauthorized("Email ose password i gabuar");
+            }
+
+            var user = email.User;
+
+            // Përcakto rolin e përdoruesit
+            string role = "User";
+            if (await _context.SuperAdminet.AnyAsync(s => s.UserID == user.UserID))
+            {
+                role = "SuperAdmin";
+            }
+            else if (await _context.Admins.AnyAsync(a => a.UserID == user.UserID))
+            {
+                role = "Admin";
+            }
+
+            var token = GenerateJwtToken(login.Username, role);
+
+            return Ok(new
+            {
+                token,
+                username = login.Username,
+                email = email.EmailAddress,
+                role = role
+            });
         }
 
         private string GenerateJwtToken(string username, string role)

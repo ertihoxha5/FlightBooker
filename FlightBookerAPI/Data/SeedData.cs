@@ -8,27 +8,82 @@ namespace FlightBookerAPI.Data
     {
         public static void Seed(ModelBuilder modelBuilder)
         {
+            // Krijo përdoruesit
             modelBuilder.Entity<User>().HasData(
                 new User
                 {
-                    Id = 1,
+                    UserID = 1,
                     Emri = "Super",
                     Mbiemri = "Admin",
-                    Email = "superadmin@flightbooker.com",
-                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("password123"),
-                    Role = "SuperAdmin",
-                    Username = "superadmin",
+                    Verified = true,
                     CreatedAt = DateTime.UtcNow
                 },
                 new User
                 {
-                    Id = 2,
+                    UserID = 2,
                     Emri = "Admin",
                     Mbiemri = "Flight",
-                    Email = "admin@flightbooker.com",
-                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("password123"),
-                    Role = "Admin",
+                    Verified = true,
+                    CreatedAt = DateTime.UtcNow
+                }
+            );
+
+            // Krijo email-et
+            modelBuilder.Entity<Email>().HasData(
+                new Email
+                {
+                    UserID = 1,
+                    EmailAddress = "superadmin@flightbooker.com",
+                    IsPrimary = true,
+                    CreatedAt = DateTime.UtcNow
+                },
+                new Email
+                {
+                    UserID = 2,
+                    EmailAddress = "admin@flightbooker.com",
+                    IsPrimary = true,
+                    CreatedAt = DateTime.UtcNow
+                }
+            );
+
+            // Krijo login-et
+            modelBuilder.Entity<Login>().HasData(
+                new Login
+                {
+                    LoginID = 1,
+                    UserID = 1,
+                    Username = "superadmin",
+                    Password = BCrypt.Net.BCrypt.HashPassword("password123"),
+                    CreatedAt = DateTime.UtcNow
+                },
+                new Login
+                {
+                    LoginID = 2,
+                    UserID = 2,
                     Username = "admin",
+                    Password = BCrypt.Net.BCrypt.HashPassword("password123"),
+                    CreatedAt = DateTime.UtcNow
+                }
+            );
+
+            // Krijo super adminin
+            modelBuilder.Entity<SuperAdmini>().HasData(
+                new SuperAdmini
+                {
+                    SuperAdminiID = 1,
+                    UserID = 1,
+                    CreatedAt = DateTime.UtcNow
+                }
+            );
+
+            // Krijo adminin
+            modelBuilder.Entity<Admin>().HasData(
+                new Admin
+                {
+                    AdminID = 1,
+                    UserID = 2,
+                    Departamenti = "IT",
+                    Niveli_i_Aksesit = 2,
                     CreatedAt = DateTime.UtcNow
                 }
             );
