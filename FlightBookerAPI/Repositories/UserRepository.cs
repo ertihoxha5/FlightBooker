@@ -1,5 +1,6 @@
 using FlightBookerAPI.Data;
 using FlightBookerAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FlightBookerAPI.Repositories
 {
@@ -14,7 +15,9 @@ namespace FlightBookerAPI.Repositories
 
         public User? GetUserByEmail(string email)
         {
-            return _context.Users.FirstOrDefault(u => u.Email == email);
+            return _context.Users
+                .Include(u => u.Login)
+                .FirstOrDefault(u => u.Login != null && u.Login.Email == email);
         }
     }
 }

@@ -11,25 +11,35 @@ namespace FlightBookerAPI.Data
             modelBuilder.Entity<User>().HasData(
                 new User
                 {
-                    Id = 1,
+                    UserID = 1,
                     Emri = "Super",
                     Mbiemri = "Admin",
-                    Email = "superadmin@flightbooker.com",
-                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("password123"),
-                    Role = "SuperAdmin",
-                    Username = "superadmin",
-                    CreatedAt = DateTime.UtcNow
+                    Verified = true,
+                    CreatedAt = DateTime.UtcNow,
+                    Login = new Login
+                    {
+                        Email = "superadmin@flightbooker.com",
+                        Password = BCrypt.Net.BCrypt.HashPassword("password123"),
+                        Username = "superadmin",
+                        Role = "SuperAdmin",
+                        UserID = 1
+                    }
                 },
                 new User
                 {
-                    Id = 2,
+                    UserID = 2,
                     Emri = "Admin",
                     Mbiemri = "Flight",
-                    Email = "admin@flightbooker.com",
-                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("password123"),
-                    Role = "Admin",
-                    Username = "admin",
-                    CreatedAt = DateTime.UtcNow
+                    Verified = true,
+                    CreatedAt = DateTime.UtcNow,
+                    Login = new Login
+                    {
+                        Email = "admin@flightbooker.com",
+                        Password = BCrypt.Net.BCrypt.HashPassword("password123"),
+                        Username = "admin",
+                        Role = "Admin",
+                        UserID = 2
+                    }
                 }
             );
         }

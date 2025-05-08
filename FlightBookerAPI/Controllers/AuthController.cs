@@ -34,32 +34,28 @@ namespace FlightBookerAPI.Controllers
             }
 
             var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.Username == loginDto.Username);
+                .Include(u => u.Login)
+                .FirstOrDefaultAsync(u => u.Login.Email == loginDto.Email);
 
-            if (user == null)
+            if (user == null || user.Login == null)
             {
-                return Unauthorized("Username ose password i gabuar");
+                return Unauthorized("Email ose password i gabuar");
             }
 
             // Verifiko password-in
-            using var hmac = new HMACSHA512();
-            var computedHash = Convert.ToBase64String(
-                hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password))
-            );
-
-            if (computedHash != user.PasswordHash)
+            if (!BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Login.Password))
             {
-                return Unauthorized("Username ose password i gabuar");
+                return Unauthorized("Email ose password i gabuar");
             }
 
-            var token = GenerateJwtToken(user.Username, user.Role);
+            var token = GenerateJwtToken(user.Login.Username, user.Login.Role);
 
             return Ok(new
             {
                 token,
-                username = user.Username,
-                email = user.Email,
-                role = user.Role
+                username = user.Login.Username,
+                email = user.Login.Email,
+                role = user.Login.Role
             });
         }
 
@@ -72,28 +68,19 @@ namespace FlightBookerAPI.Controllers
             }
 
             // Kontrollo nëse email-i ekziston
-            if (await _context.Users.AnyAsync(u => u.Email == registerDto.Email))
+            if (await _context.Logins.AnyAsync(l => l.Email == registerDto.Email))
             {
                 return BadRequest("Ky email është i regjistruar tashmë");
             }
 
             // Kontrollo nëse username ekziston
-            if (await _context.Users.AnyAsync(u => u.Username == registerDto.Username))
+            if (await _context.Logins.AnyAsync(l => l.Username == registerDto.Username))
             {
                 return BadRequest("Ky username është i zënë");
             }
 
-            // Krijo hash të password-it
-            using var hmac = new HMACSHA512();
-            var passwordHash = Convert.ToBase64String(
-                hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password))
-            );
-
             var user = new User
             {
-                Username = registerDto.Username,
-                Email = registerDto.Email,
-                PasswordHash = passwordHash,
                 Emri = registerDto.Emri,
                 Mbiemri = registerDto.Mbiemri,
                 Rruga = registerDto.Rruga,
@@ -102,8 +89,16 @@ namespace FlightBookerAPI.Controllers
                 Gjinia = registerDto.Gjinia,
                 DataLindjes = registerDto.DataLindjes,
                 Shteti = registerDto.Shteti,
-                Role = "User",
-                CreatedAt = DateTime.UtcNow
+                Verified = false,
+                CreatedAt = DateTime.UtcNow,
+                Login = new Login
+                {
+                    Username = registerDto.Username,
+                    Email = registerDto.Email,
+                    Password = BCrypt.Net.BCrypt.HashPassword(registerDto.Password),
+                    Role = "User",
+                    CreatedAt = DateTime.UtcNow
+                }
             };
 
             _context.Users.Add(user);

@@ -11,6 +11,7 @@ namespace FlightBookerAPI.Data
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Login> Logins { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -19,12 +20,12 @@ namespace FlightBookerAPI.Data
             // Konfigurime shtesë për modelet mund të shtohen këtu
             SeedData.Seed(modelBuilder);
 
-            modelBuilder.Entity<User>()
-                .HasIndex(u => u.Email)
+            modelBuilder.Entity<Login>()
+                .HasIndex(l => l.Email)
                 .IsUnique();
 
-            modelBuilder.Entity<User>()
-                .HasIndex(u => u.Username)
+            modelBuilder.Entity<Login>()
+                .HasIndex(l => l.Username)
                 .IsUnique();
         }
     }
