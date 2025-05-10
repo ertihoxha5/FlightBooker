@@ -19,6 +19,14 @@ namespace FlightBookerAPI.Models
         public required string Password { get; set; }
 
         [Required]
+        [StringLength(100)]
+        public required string Email { get; set; }
+
+        [Required]
+        [StringLength(20)]
+        public required string Role { get; set; }
+
+        [Required]
         public int UserID { get; set; }
 
         [Required]

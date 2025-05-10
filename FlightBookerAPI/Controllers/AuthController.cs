@@ -118,7 +118,6 @@ namespace FlightBookerAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            // Kontrollo nëse email-i ekziston
             var email = await _context.Emails
                 .Include(e => e.User)
                 .ThenInclude(u => u.Login)
@@ -186,8 +185,9 @@ namespace FlightBookerAPI.Controllers
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddHours(1),
-                signingCredentials: credentials);
+                expires: DateTime.Now.AddHours(3),
+                signingCredentials: credentials
+            );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
