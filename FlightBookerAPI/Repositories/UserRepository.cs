@@ -16,8 +16,8 @@ namespace FlightBookerAPI.Repositories
         public User? GetUserByEmail(string email)
         {
             return _context.Users
-                .Include(u => u.Login)
-                .FirstOrDefault(u => u.Login != null && u.Login.Email == email);
+                .Include(u => u.Emails)
+                .FirstOrDefault(u => u.Emails.Any(e => e.EmailAddress == email));
         }
     }
 }

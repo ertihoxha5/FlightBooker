@@ -4,3 +4,42 @@ GET {{FlightBookerAPI_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+
+@baseUrl = http://localhost:5215
+
+### Login me Super Admin
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "superadmin",
+    "password": "password123"
+}
+
+### Login me Admin
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "password": "password123"
+}
+
+### Regjistro përdorues të ri
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+    "emri": "Test",
+    "mbiemri": "User",
+    "email": "test@example.com",
+    "username": "testuser",
+    "password": "Test123!",
+    "confirmPassword": "Test123!",
+    "rruga": "Rr. Test",
+    "zipCode": "1001",
+    "qyteti": "Tirana",
+    "gjinia": "M",
+    "dataLindjes": "1990-01-01",
+    "shteti": "Shqipëri"
+}
