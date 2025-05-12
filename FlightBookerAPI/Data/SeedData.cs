@@ -54,6 +54,8 @@ namespace FlightBookerAPI.Data
                     UserID = 1,
                     Username = "superadmin",
                     Password = BCrypt.Net.BCrypt.HashPassword("password123"),
+                    Email = "superadmin@flightbooker.com",
+                    Role = "SuperAdmin",
                     CreatedAt = DateTime.UtcNow
                 },
                 new Login
@@ -62,6 +64,8 @@ namespace FlightBookerAPI.Data
                     UserID = 2,
                     Username = "admin",
                     Password = BCrypt.Net.BCrypt.HashPassword("password123"),
+                    Email = "admin@flightbooker.com",
+                    Role = "Admin",
                     CreatedAt = DateTime.UtcNow
                 }
             );

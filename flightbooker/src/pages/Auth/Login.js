@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
 function Login() {
@@ -125,9 +125,9 @@ function Login() {
                   </div>
                   <div className="text-center mt-2">
                     <span className="small">Nuk keni llogari? </span>
-                    <a className="small text-primary fw-bold" href="/signup">
+                    <Link className="small text-primary fw-bold" to="/signup">
                       Regjistrohuni
-                    </a>
+                    </Link>
                   </div>
                 </form>
               </div>
