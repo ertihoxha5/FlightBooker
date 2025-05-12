@@ -82,6 +82,8 @@ namespace FlightBookerAPI.Controllers
                     UserID = user.UserID,
                     Username = registerDto.Username,
                     Password = BCrypt.Net.BCrypt.HashPassword(registerDto.Password),
+                    Email = registerDto.Email,
+                    Role = "User",
                     CreatedAt = DateTime.UtcNow
                 };
 
@@ -149,7 +151,7 @@ namespace FlightBookerAPI.Controllers
 
             // Përcakto rolin e përdoruesit
             string role = "User";
-            if (await _context.SuperAdminet.AnyAsync(s => s.UserID == user.UserID))
+            if (await _context.SuperAdmins.AnyAsync(s => s.UserID == user.UserID))
             {
                 role = "SuperAdmin";
             }
