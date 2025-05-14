@@ -118,7 +118,9 @@ const Home = () => {
             <div className="card-body">
               <h4 className="text-uppercase font-weight-bold mb-2">Explore with FLIGHTBOOKER</h4>
               <p className="mb-3">Special offers to over 50 destinations. Limited time!</p>
+              <a href="/Client/book-flight">
               <button className="btn btn-light text-primary font-weight-bold">Book Your Flight</button>
+              </a>
               
             </div>
           </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Login() {
@@ -19,42 +19,32 @@ function Login() {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:5215/api/Auth/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response = await axios.post("http://localhost:5215/api/Auth/login", {
+        email,
+        password,
+      });
 
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            username: response.data.username,
-            email: response.data.email,
-            role: response.data.role,
-          })
-        );
+      const { token, username, email: userEmail, role } = response.data;
 
-        // Navigate based on role
-        switch (response.data.role) {
-          case "SuperAdmin":
-            navigate("/Superadmin/sahome");
-            break;
-          case "Admin":
-            navigate("/Admin/adminhome");
-            break;
-          case "User":
-            navigate("/Client/home");
-            break;
-          default:
-            navigate("/");
-        }
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify({ username, email: userEmail, role }));
+
+      // Drejto sipas rolit
+      switch (role) {
+        case "SuperAdmin":
+          navigate("/Superadmin/sahome");
+          break;
+        case "Admin":
+          navigate("/Admin/adminhome");
+          break;
+        case "User":
+          navigate("/Client/home");
+          break;
+        default:
+          navigate("/");
       }
-    } catch (error) {
-      setError(error.response?.data?.message || "Email ose password i gabuar.");
+    } catch (err) {
+      setError(err.response?.data || "Email ose fjalëkalimi i pasaktë.");
     }
   };
 
@@ -66,12 +56,8 @@ function Login() {
             <div className="card o-hidden border-0 shadow-lg">
               <div className="card-body p-5">
                 <div className="text-center mb-4">
-                  <h1 className="h4 text-gray-900 fw-bold">
-                    Mirë se vini përsëri!
-                  </h1>
-                  <p className="text-muted">
-                    Hyni në panelin tuaj të FlightBooker
-                  </p>
+                  <h1 className="h4 text-gray-900 fw-bold">Mirë se vini përsëri!</h1>
+                  <p className="text-muted">Hyni në panelin tuaj të FlightBooker</p>
                 </div>
 
                 {error && <div className="alert alert-danger">{error}</div>}
@@ -125,9 +111,9 @@ function Login() {
                   </div>
                   <div className="text-center mt-2">
                     <span className="small">Nuk keni llogari? </span>
-                    <Link className="small text-primary fw-bold" to="/signup">
+                    <a className="small text-primary fw-bold" href="/signup">
                       Regjistrohuni
-                    </Link>
+                    </a>
                   </div>
                 </form>
               </div>

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import {
-  Table, Button, Modal, Form, Badge, Row, Col, Toast, ToastContainer, InputGroup
+  Table, Button, Modal, Form, Badge, Row, Col, Toast, ToastContainer
 } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaPlaneDeparture, FaUserCheck, FaCalendarCheck } from 'react-icons/fa';
 
-const BookFlightPage = () => {
+const BookFlight = () => {
   const flightsData = [
     { id: 1, airline: 'Turkish Airlines', from: 'Istanbul', to: 'Berlin', departure: '2025-06-02 08:00', arrival: '2025-06-02 11:30', price: 320, category: 'classic' },
     { id: 2, airline: 'Qatar Airways', from: 'Doha', to: 'Tokyo', departure: '2025-06-05 13:00', arrival: '2025-06-06 02:30', price: 980, category: 'premium' },
@@ -19,6 +19,7 @@ const BookFlightPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [formErrors, setFormErrors] = useState({});
+  const [myFlights, setMyFlights] = useState([]);
   const [formData, setFormData] = useState({
     name: '', email: '', passport: '', nationality: '', phone: '', dob: '', gender: '', address: '', seatClass: 'economy', luggage: '', notes: '', tickets: 1
   });
@@ -32,7 +33,9 @@ const BookFlightPage = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setFormData({ name: '', email: '', passport: '', nationality: '', phone: '', dob: '', gender: '', address: '', seatClass: 'economy', luggage: '', notes: '', tickets: 1 });
+    setFormData({
+      name: '', email: '', passport: '', nationality: '', phone: '', dob: '', gender: '', address: '', seatClass: 'economy', luggage: '', notes: '', tickets: 1
+    });
     setFormErrors({});
   };
 
@@ -56,6 +59,9 @@ const BookFlightPage = () => {
     e.preventDefault();
     const errors = validateForm();
     if (Object.keys(errors).length > 0) return setFormErrors(errors);
+
+    // Save booked flight
+    setMyFlights(prev => [...prev, { ...selectedFlight, passenger: formData.name, tickets: formData.tickets }]);
     setShowToast(true);
     handleCloseModal();
   };
@@ -71,7 +77,7 @@ const BookFlightPage = () => {
         </Form.Select>
       </div>
 
-      <div className="card shadow-lg border-0">
+      <div className="card shadow-lg border-0 mb-4">
         <div className="card-body p-0">
           <Table responsive bordered hover className="mb-0">
             <thead className="table-dark text-center">
@@ -104,6 +110,7 @@ const BookFlightPage = () => {
         </div>
       </div>
 
+      {/* Modal for booking */}
       <Modal show={showModal} onHide={handleCloseModal} size="lg" centered backdrop="static">
         <Modal.Header closeButton>
           <Modal.Title><FaUserCheck className="me-2 text-success" />Passenger Information</Modal.Title>
@@ -141,18 +148,54 @@ const BookFlightPage = () => {
         </Modal.Body>
       </Modal>
 
+      {/* Toast notification */}
       <ToastContainer className="p-3" position="top-end">
         <Toast show={showToast} onClose={() => setShowToast(false)} bg="success" delay={4000} autohide animation>
           <Toast.Header>
             <strong className="me-auto text-success">Success</strong>
           </Toast.Header>
           <Toast.Body className="text-white">
-            ✅ Flight booked successfully!<br />See your flights on the page <strong>My Flights</strong>.
+            ✅ Flight booked successfully!<br />See your flights below in <strong>My Flights</strong>.
           </Toast.Body>
         </Toast>
       </ToastContainer>
+
+      {/* My Flights Section */}
+      {myFlights.length > 0 && (
+        <div className="mt-5">
+          <h3 className="text-primary mb-3">My Flights</h3>
+          <Table bordered hover responsive>
+            <thead className="table-secondary">
+              <tr>
+                <th>Airline</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Departure</th>
+                <th>Arrival</th>
+                <th>Tickets</th>
+                <th>Price</th>
+                <th>Passenger</th>
+              </tr>
+            </thead>
+            <tbody>
+              {myFlights.map((f, idx) => (
+                <tr key={idx}>
+                  <td>{f.airline}</td>
+                  <td>{f.from}</td>
+                  <td>{f.to}</td>
+                  <td>{f.departure}</td>
+                  <td>{f.arrival}</td>
+                  <td>{f.tickets}</td>
+                  <td>{f.price}</td>
+                  <td>{f.passenger}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+      )}
     </div>
   );
 };
 
-export default BookFlightPage;
+export default BookFlight;
